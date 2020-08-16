@@ -1,0 +1,2 @@
+module SimpleTalk
+end
