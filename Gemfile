@@ -24,7 +24,7 @@ group :test, :development do
   gem 'fasterer', '~> 0.8.3', require: false
   gem 'overcommit', '~> 0.54.0', require: false
   gem 'reek', '~> 6.0', '>= 6.0.1', require: false
-  gem 'rubocop', '~> 0.87.1', require: false
+  gem 'rubocop', '~> 0.89.1', require: false
   gem 'rubocop-performance', '~> 1.6', '>= 1.6.1', require: false
   gem 'rubocop-rspec', '~> 1.40', require: false
 end

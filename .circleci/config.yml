@@ -1,0 +1,111 @@
+defaults: &defaults
+  working_directory: ~/simple_talk
+  docker:
+    - image: circleci/ruby:2.6.5-node
+      environment:
+        HANAMI_ENV: test
+        DB_HOST: 127.0.0.1
+        DB_USER: root
+
+    - image: circleci/postgres:12-alpine
+      environment:
+        POSTGRES_USER: root
+        POSTGRES_PASSWORD: ""
+        POSTGRES_DB: simple_talk_test
+
+references:
+  install_system_dependencies: &install_system_dependencies
+    run:
+      name: Installing system dependencies
+      command: |
+        sudo apt update
+        sudo apt install -y postgresql-client cmake
+
+  install_bundler: &install_bundler
+    run:
+      name: Installing bundler
+      command: gem i bundler -v $(tail -1 Gemfile.lock | tr -d ' ')
+
+  restore_bundle_cache: &restore_bundle_cache
+    restore_cache:
+      keys:
+        - simple_talk-{{ checksum "Gemfile" }}
+
+  bundle_install: &bundle_install
+    run:
+      name: Installing gems
+      command: bundle install --path vendor/bundle
+
+  save_bundle_cache: &save_bundle_cache
+    save_cache:
+      key: simple_talk-{{ checksum "Gemfile" }}
+      paths:
+        - vendor/bundle
+
+version: 2
+jobs:
+  linters:
+    <<: *defaults
+
+    steps:
+      - checkout
+
+      - <<: *install_system_dependencies
+      - <<: *install_bundler
+      - <<: *restore_bundle_cache
+      - <<: *bundle_install
+      - <<: *save_bundle_cache
+
+      - run:
+          name: Running overcommit
+          command: |
+            bundle exec overcommit -s
+            SKIP=AuthorEmail,AuthorName bundle exec overcommit -r
+
+  tests:
+    <<: *defaults
+
+    environment:
+      - CIRCLE_CI: true
+      - RACK_ENV: test
+      - DATABASE_URL: "postgres://root@localhost:5432/simple_talk_test"
+
+    steps:
+      - checkout
+
+      - <<: *install_system_dependencies
+      - <<: *install_bundler
+      - <<: *restore_bundle_cache
+      - <<: *bundle_install
+      - <<: *save_bundle_cache
+
+      - run:
+          name: Wait for db
+          command: dockerize -wait tcp://localhost:5432 -timeout 1m
+
+      - run:
+          name: Creating database
+          command: bundle exec hanami db prepare
+
+      - run:
+          name: Loading schema
+          command: bundle exec hanami db migrate
+
+      - run:
+          name: Running tests
+          command: bundle exec rspec
+
+      - run:
+          name: Coverage
+          command: bundle exec undercover -c origin/develop
+
+      - store_artifacts:
+          path: ~/simple_talk/coverage
+          destination: coverage
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - linters
+      - tests
