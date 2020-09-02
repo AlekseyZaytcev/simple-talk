@@ -1,0 +1,43 @@
+pre-commit:
+  parallel: true
+  commands:
+    rspec:
+      tags: tests
+      files: git diff --name-only develop
+      glob: "*_spec.rb"
+      run: bundle exec rspec {files}
+    rubocop:
+      tags: ruby code style
+      files: git diff --name-only develop
+      glob: "*.rb"
+      run: bundle exec rubocop --force-exclusion {files}
+    reek:
+      tags: ruby code style
+      files: git diff --name-only develop
+      run: bundle exec reek --force-exclusion {files}
+    fasterer:
+      tags: ruby code optimization
+      run: bundle exec fasterer
+    gems-audit:
+      tags: ruby code security
+      run: bundle audit
+
+pre-push:
+  parallel: true
+  commands:
+    rspec:
+      tags: tests
+      run: bundle exec rspec
+    rubocop:
+      tags: ruby code style
+      glob: "*.rb"
+      run: bundle exec rubocop --force-exclusion {all_files}
+    reek:
+      tags: ruby code style
+      run: bundle exec reek
+    fasterer:
+      tags: ruby code optimization
+      run: bundle exec fasterer
+    gems-audit:
+      tags: ruby code security
+      run: bundle audit

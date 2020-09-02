@@ -2,11 +2,10 @@
 
 source 'https://rubygems.org'
 
-gem 'dotenv', '~> 2.7', '>= 2.7.6'
-gem 'hanami', '~> 1.3', '>= 1.3.3'
+gem 'hanami', '~> 1.3'
 gem 'hanami-model', '~> 1.3'
-gem 'pg', '~> 1.2', '>= 1.2.3'
-gem 'rake', '~> 13.0', '>= 13.0.1'
+gem 'pg'
+gem 'rake'
 
 group :development do
   # Code reloading
@@ -16,28 +15,28 @@ group :development do
 end
 
 group :test, :development do
-  gem 'factory_bot', '~> 6.1'
-  gem 'faker', '~> 2.13'
-  gem 'pry-byebug', '~> 3.9'
+  gem 'dotenv'
+  gem 'factory_bot'
+  gem 'faker'
 
   # Code quality
-  gem 'bundler-audit', '~> 0.7.0.1', require: false
-  gem 'fasterer', '~> 0.8.3', require: false
-  gem 'overcommit', '~> 0.54.0', require: false
-  gem 'reek', '~> 6.0', '>= 6.0.1', require: false
-  gem 'rubocop', '~> 0.89.1', require: false
-  gem 'rubocop-performance', '~> 1.6', '>= 1.6.1', require: false
-  gem 'rubocop-rspec', '~> 1.40', require: false
+  gem 'bundler-audit', require: false
+  gem 'fasterer', require: false
+  gem 'lefthook', require: false
+  gem 'reek', require: false
+  gem 'rubocop', require: false
+  gem 'rubocop-performance', require: false
+  gem 'rubocop-rspec', require: false
 end
 
 group :test do
-  gem 'database_cleaner', '~> 1.8', '>= 1.8.5', require: false
-  gem 'json_matchers', '~> 0.11.1', require: false
-  gem 'rack-test', '~> 1.1', require: false
-  gem 'rspec', '~> 3.9'
-  gem 'simplecov', '~> 0.18.5', require: false
-  gem 'simplecov-lcov', '~> 0.8.0', require: false
-  gem 'undercover', '~> 0.3.4', require: false
+  gem 'database_cleaner'
+  gem 'json_matchers'
+  gem 'rack-test'
+  gem 'rspec'
+  gem 'simplecov'
+  gem 'simplecov-lcov'
+  gem 'undercover'
 end
 
 group :production do
