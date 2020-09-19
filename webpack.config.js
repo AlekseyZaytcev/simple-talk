@@ -3,6 +3,7 @@ const { resolve, join } = require('path');
 const { merge } = require('webpack-merge');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ManifestPlugin = require('webpack-manifest-plugin');
 
 module.exports = ({ environment }) => {
   const development = environment === 'development';
@@ -15,7 +16,7 @@ module.exports = ({ environment }) => {
 
   return merge({
     entry: {
-      main: './apps/web/assets/javascripts/application.js'
+      application: './apps/web/assets/javascripts/application.js'
     },
     output: {
       filename: '[name][hash].js',
@@ -49,7 +50,8 @@ module.exports = ({ environment }) => {
     },
     devServer: {
       contentBase: join(__dirname, 'public', 'assets'),
-      port: 8080
+      port: 8080,
+      publicPath: '/assets/'
     },
     plugins: [
       new MiniCssExtractPlugin({
@@ -59,6 +61,9 @@ module.exports = ({ environment }) => {
       new HtmlWebpackPlugin({
         title: 'Simple Talk App',
         minify: !development
+      }),
+      new ManifestPlugin({
+        fileName: 'assets.json'
       })
     ]
   });

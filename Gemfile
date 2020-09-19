@@ -4,6 +4,7 @@ source 'https://rubygems.org'
 
 gem 'hanami', '~> 1.3'
 gem 'hanami-model', '~> 1.3'
+gem 'dry-auto_inject'
 gem 'pg'
 gem 'rake'
 
@@ -15,6 +16,7 @@ group :development do
 end
 
 group :test, :development do
+  gem 'byebug'
   gem 'dotenv'
   gem 'factory_bot'
   gem 'faker'
