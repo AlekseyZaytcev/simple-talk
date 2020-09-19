@@ -17,6 +17,7 @@ end
 
 group :test, :development do
   gem 'factory_bot', '~> 6.1'
+  gem 'faker', '~> 2.13'
   gem 'pry-byebug', '~> 3.9'
 
   # Code quality
