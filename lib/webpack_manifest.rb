@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'net/http'
 
 class WebpackManifest
@@ -18,6 +20,7 @@ class WebpackManifest
     @manifest ||= read_manifest(configuration.use_dev_server ? data_from_server : data_from_file)
   end
 
+  #:reek:UncommunicativeVariableName
   def read_manifest(data)
     JSON.parse data
   rescue StandardError => e

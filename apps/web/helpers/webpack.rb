@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Web
   module Helpers
     module Webpack
@@ -14,6 +16,7 @@ module Web
         stylesheet url
       end
 
+      #:reek:UtilityFunction
       def assets_path(file)
         return [CONFIGURATION.server_url, 'assets', file].join('/') if CONFIGURATION.use_dev_server
 
@@ -28,6 +31,7 @@ module Web
         full_path.to_s
       end
 
+      #:reek:UtilityFunction
       def resolve_gzip_filename(path)
         filename_with_hash = [path.split('/').last, '.gz'].join
         WEBPACK_MANIFEST.resolve_entry(filename_with_hash)
