@@ -16,6 +16,5 @@ SimpleCov.minimum_coverage(100)
 if ARGV.grep(/spec.\w+/).empty?
   SimpleCov.start do
     add_filter(%r{^/spec/})
-    add_filter('apps/web/application.rb')
   end
 end
