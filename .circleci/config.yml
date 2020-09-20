@@ -7,12 +7,6 @@ defaults: &defaults
         DB_HOST: 127.0.0.1
         DB_USER: root
 
-    - image: circleci/postgres:12-alpine
-      environment:
-        POSTGRES_USER: root
-        POSTGRES_PASSWORD: ""
-        POSTGRES_DB: simple_talk_test
-
 references:
   install_system_dependencies: &install_system_dependencies
     run:
@@ -63,6 +57,19 @@ jobs:
 
   tests:
     <<: *defaults
+
+    docker:
+      - image: circleci/ruby:2.6.5-node
+        environment:
+          HANAMI_ENV: test
+          DB_HOST: 127.0.0.1
+          DB_USER: root
+
+      - image: circleci/postgres:12-alpine
+        environment:
+          POSTGRES_USER: root
+          POSTGRES_PASSWORD: ""
+          POSTGRES_DB: simple_talk_test
 
     environment:
       - CIRCLE_CI: true
