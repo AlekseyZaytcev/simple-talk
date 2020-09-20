@@ -37,33 +37,6 @@ Layout/FirstArrayElementIndentation:
 Layout/ClassStructure:
   Enabled: true
 
-Lint/BinaryOperatorWithIdenticalOperands:
-  Enabled: true
-
-Lint/DuplicateRescueException:
-  Enabled: true
-
-Lint/EmptyConditionalBody:
-  Enabled: true
-
-Lint/FloatComparison:
-  Enabled: true
-
-Lint/MissingSuper:
-  Enabled: true
-
-Lint/OutOfRangeRegexpRef:
-  Enabled: true
-
-Lint/SelfAssignment:
-  Enabled: true
-
-Lint/TopLevelReturnWithArgument:
-  Enabled: true
-
-Lint/UnreachableLoop:
-  Enabled: true
-
 # RSpec -----------------------------------------------------------------------
 
 RSpec/MultipleExpectations:
@@ -76,4 +49,4 @@ RSpec/MessageSpies:
   EnforcedStyle: receive
 
 RSpec/NestedGroups:
-  Max: 2
+  Max: 3
