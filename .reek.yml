@@ -9,4 +9,4 @@ detectors:
     max_params: 6
 
 exclude_paths:
-  - spec/support/helpers
+  - vendor/bundle

@@ -60,3 +60,6 @@ build-iPhoneSimulator/
 /tmp
 .env.local
 .env.*.local
+
+# node-modules
+node_modules

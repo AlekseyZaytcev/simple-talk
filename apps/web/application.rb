@@ -21,6 +21,7 @@ module Web
       # When you add new directories, remember to add them here.
       #
       load_paths << %w[
+        helpers
         controllers
         views
       ]
@@ -127,7 +128,7 @@ module Web
         # See: https://guides.hanamirb.org/assets/compressors
         #
         # In order to skip JavaScript compression comment the following line
-        javascript_compressor :builtin
+        # javascript_compressor :builtin
 
         # Stylesheet compressor
         #
@@ -140,7 +141,7 @@ module Web
         # See: https://guides.hanamirb.org/assets/compressors
         #
         # In order to skip stylesheet compression comment the following line
-        stylesheet_compressor :builtin
+        # stylesheet_compressor :builtin
 
         # Specify sources for assets
         #
@@ -259,6 +260,7 @@ module Web
       view.prepare do
         include Hanami::Helpers
         include Web::Assets::Helpers
+        include Web::Helpers::Webpack
       end
     end
 
@@ -268,6 +270,17 @@ module Web
     configure :development do
       # Don't handle exceptions, render the stack trace
       handle_exceptions false
+
+      security.content_security_policy %(
+        script-src 'self' http://0.0.0.0:8080;
+      )
+
+      assets do
+        compile false
+        cdn true
+        host '0.0.0.0'
+        port 8080
+      end
     end
 
     ##
