@@ -59,7 +59,7 @@ jobs:
       - run:
           name: Running lefthook
           command: |
-            bundle exec lefthook run pre-push
+            bundle exec lefthook run circle-ci
 
   tests:
     <<: *defaults

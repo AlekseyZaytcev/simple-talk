@@ -41,3 +41,20 @@ pre-push:
     gems-audit:
       tags: ruby code security
       run: bundle audit
+
+circle-ci:
+  parallel: true
+  commands:
+    rubocop:
+      tags: ruby code style
+      glob: "*.rb"
+      run: bundle exec rubocop --force-exclusion {all_files}
+    reek:
+      tags: ruby code style
+      run: bundle exec reek
+    fasterer:
+      tags: ruby code optimization
+      run: bundle exec fasterer
+    gems-audit:
+      tags: ruby code security
+      run: bundle audit
