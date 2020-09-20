@@ -7,9 +7,9 @@ class WebpackManifest
     @configuration = configuration
   end
 
-  def resolve_entry(name)
-    entry = manifest[name]
-    raise "File #{name} is not found  in Webpack Manifest" unless entry
+  def resolve_entry(file_name)
+    entry = manifest[file_name]
+    raise I18n.t('webpack.manifest_not_found', file_name: file_name) unless entry
 
     entry
   end
@@ -24,7 +24,7 @@ class WebpackManifest
   def read_manifest(data)
     JSON.parse data
   rescue StandardError => e
-    raise "Error while reading manifest file #{manifest_path}. Does it exist? Exception details: #{e.message}"
+    raise I18n.t('webpack.read_manifest_error', manifest_path: manifest_path, message: e.message)
   end
 
   def data_from_server

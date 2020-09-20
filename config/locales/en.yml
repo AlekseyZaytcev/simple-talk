@@ -1,0 +1,4 @@
+en:
+  webpack:
+    read_manifest_error: "Error while reading manifest file %{manifest_path}. Does it exist? Exception details: %{message}"
+    manifest_not_found: "File %{file_name} is not found  in Webpack Manifest"
